@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+</head>
+<body>
+
+    <!-- <ul>
+    <% data.forEach((dt)=> { %>
+        <li>
+            <h2>
+              <%= dt.name %>
+            </h2>
+            <p>
+              <%= dt.email %>
+            </p>
+        </li>
+        <hr />
+    <% }) %>
+</ul> -->
+
+<div>
+    <ul id="ulist">
+        
+    </ul>
+</div>
+</body>
+<script>
+    fetch('http://localhost:3000/getall')
+    .then(res => res.json())
+    .then(dat => {
+        console.log(dat);
+        data=dat.data;
+        data.forEach(el => {
+        const node = document.createElement("li");
+        const textnode = document.createTextNode(el.name);
+        node.appendChild(textnode);
+        document.getElementById("ulist").appendChild(node);
+
+        //document.getElementById('ulist').appendChild = `<li> ${el.name}</li>`;
+    });
+    })
+    
+    
+
+  </script>
+</html>
