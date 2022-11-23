@@ -40,25 +40,12 @@ app.post('/uploadx', (req, res, next) => {
 
 app.post('/upload', (req, res, next) => {
   const dt = req.body;
-  //   let postUpload = {
-  //     name: dt.name,
-  //     email: dt.email,
-  //     description: dt.description,
-  //     imgurl: dt.imgurl,
-  //   };
-  //   console.log(postUpload);
-  //   let sql = 'INSERT INTO users SET ?';
-  //   connection.query(sql, postUpload, (req, result) => {
-  //     if (err) {
-  //       console.log('Your Data not Submitted to some error in your value');
-  //     } else console.log('Your Data Successfully Submitted');
-  //   });
 
   const sqlInsert =
     'INSERT INTO users (name, email, description, imgurl) values (?, ?,?,?)'; // whatever query you want
   connection.query(
     sqlInsert,
-    [dt.name, dt.email, dt.description, dt.imgurl], // inserts into '?' symbol
+    [dt.name, dt.email, dt.description, dt.imgurl],
     (err, results, fields) => {
       if (err) {
         console.log('failed', err);
@@ -82,6 +69,7 @@ app.get('/delete/:id', (req, res, next) => {
       console.log('succeed', results);
     }
   });
+  next();
 });
 
 app.post('/update', (req, res, next) => {
@@ -96,22 +84,34 @@ app.post('/update', (req, res, next) => {
 });
 
 //Getting users
-app.get('/getall', (req, res, next) => {
+app.get('/getall', async (req, res, next) => {
   const sql = 'SELECT * from users';
   connection.query(sql, (err, results, fields) => {
     if (err) {
       console.log('failed', err);
     } else {
-      console.log('succeed');
-      res.json({ status: 'success', data: results });
+      allU = results;
+      // res.json({ status: 'success', data: results });
+      // res.render('users', {
+      //   title: 'Users',
+      //   uu: allU,
+      //   data: [],
+      // });
     }
   });
 });
 
 app.get('/users', (req, res) => {
-  res.render('users', {
-    title: 'Users',
-    data: [],
+  const sql = 'SELECT * from users';
+  connection.query(sql, (err, results, fields) => {
+    if (err) {
+      console.log('failed', err);
+    } else {
+      res.render('users', {
+        title: 'Users',
+        data: results,
+      });
+    }
   });
 });
 

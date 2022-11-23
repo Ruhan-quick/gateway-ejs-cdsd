@@ -31,6 +31,8 @@
     
     <div class="container mt-3">
         <h1>Bismillah, Alhamdulillah</h1>
+        <button class="btn btn-success my-3" onclick="goAllItems()">All Users</button>
+        <h3>Add User</h3>
     <form action="/upload" method="post">
         Email ID: <br>
         <input type="email" class="form-control " name="email" id="email"><br>
@@ -86,5 +88,10 @@
       <button type="submit" class="btn btn-primary">Sign in</button>
     </form> -->
   </body>
-  
+  <script>
+   const  goAllItems = () =>{
+    window.location.replace("http://localhost:3000/users");
+
+   }
+  </script>
 </html>
